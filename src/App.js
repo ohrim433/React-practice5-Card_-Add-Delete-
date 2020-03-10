@@ -294,9 +294,11 @@ class App extends React.Component {
     };
 
     handleAddCard = (newCard) => {
-        newCard.id = this.state.data.length+1;
+        newCard.id = this.state.data.length + 1;
         const nextData = [...this.state.data, newCard];
-        this.setState({data: nextData});
+        // console.log("nextData: ", nextData);
+        this.setState(() => { return { data: nextData } });
+        // console.log(this.state.data);
     };
 
     handleDeleteCard = delUserId => {

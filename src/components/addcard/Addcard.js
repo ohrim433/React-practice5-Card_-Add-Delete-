@@ -14,49 +14,51 @@ class Addcard extends React.Component {
         }
     }
 
-    handlerNameChng = (e) => {
-        this.setState({ name: e.currentTarget.value });
+    handlerNameChng = ({target: {value}}) => {
+        this.setState({ name: value });
     };
 
-    handlerUsernameChng = (e) => {
-        this.setState({ username: e.currentTarget.value });
+    handlerUsernameChng = ({target: {value}}) => {
+        this.setState({ username: value });
     };
 
-    handlerPhoneChng = (e) => {
-        this.setState({ phone: e.currentTarget.value });
+    handlerPhoneChng = ({target: {value}}) => {
+        this.setState({ phone: value });
     };
 
-    handlerCityChng = (e) => {
+    handlerCityChng = ({target: {value}}) => {
+        // debugger
         const {address} = this.state;
-        console.log("address");
-        console.log(address);
-        address.city = e.currentTarget.value;
-        this.setState({ address });
+        address.city = value;
+        this.setState(() => { return {address} });
+        // console.log("address");
+        // console.log(address);
     };
 
     onAddBtnClick = (e) => {
         e.preventDefault();
         const {id, name, username, phone, address} = this.state;
         this.props.onAddBtnClickHandler({id, name, username, phone, address});
-       // console.log(this.data);
+        this.setState(() => { return {id: '', name: '', username: '', phone: '', address: {city: ''}}});
+       console.log(this.state);
     };
 
     render () {
-        const {name, username, phone, address:{city}} = this.state;
+        // const {name, username, phone, address:{city}} = this.state;
         return (
             <div className="card" style={{width: '18rem', float: 'left', height: '20rem', padding: '5px'}}>
                 <form>
                     <input type="text" placeholder="name" className="card-title"
-                    onChange={this.handlerNameChng} value={name}/>
+                    onChange={this.handlerNameChng}/>
                     <br/>
                     <input type="text" placeholder="username" className="card-title"
-                    onChange={this.handlerUsernameChng} value={username}/>
+                    onChange={this.handlerUsernameChng}/>
                     <br/>
                     <input type="text" placeholder="phone" className="card-title"
-                    onChange={this.handlerPhoneChng} value={phone}/>
+                    onChange={this.handlerPhoneChng}/>
                     <br/>
                     <input type="text" placeholder="city" className="card-title"
-                    onChange={this.handlerCityChng} value={city}/>
+                    onChange={this.handlerCityChng}/>
                     <br/>
                     <button className="btn btn-primary" onClick={this.onAddBtnClick}>Add Card</button>
                 </form>
